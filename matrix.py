@@ -28,12 +28,9 @@ def gen_random_pol(seed, i, j):
     
     return pol
 
-def gen_random_matrix(k):
+def gen_random_matrix(k, rho):
     matrix = np.zeros((k, k), dtype=object)
-    seed = secrets.token_bytes(32)  
-    
     for i in range(k):
         for j in range(k):
-            matrix[i][j] = gen_random_pol(seed, i, j)
-    
+            matrix[i][j] = gen_random_pol(rho, i, j)
     return matrix
