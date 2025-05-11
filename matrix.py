@@ -1,5 +1,4 @@
 import hashlib
-import secrets
 import numpy as np
 
 def gen_random_pol(seed, i, j, q):
