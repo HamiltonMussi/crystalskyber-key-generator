@@ -2,9 +2,7 @@ import hashlib
 import secrets
 import numpy as np
 
-q = 3329
-
-def gen_random_pol(seed, i, j):
+def gen_random_pol(seed, i, j, q):
     seed_i_j = seed + (i).to_bytes(1, 'big') + (j).to_bytes(1, 'big')
     shake = hashlib.shake_128()
     shake.update(seed_i_j)
@@ -28,9 +26,9 @@ def gen_random_pol(seed, i, j):
     
     return pol
 
-def gen_random_matrix(k, rho):
+def gen_random_matrix(k, rho, q):
     matrix = np.zeros((k, k), dtype=object)
     for i in range(k):
         for j in range(k):
-            matrix[i][j] = gen_random_pol(rho, i, j)
+            matrix[i][j] = gen_random_pol(rho, i, j, q)
     return matrix

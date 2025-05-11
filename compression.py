@@ -1,8 +1,6 @@
 import numpy as np
 
-q = 3329
-
-def compress_vector(vector, coeff_size):
+def compress_vector(vector, coeff_size, q):
     n = len(vector)
     compressed_vector = np.zeros(n, dtype=object)
     for i in range(n):

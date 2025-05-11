@@ -4,11 +4,7 @@ from compression import compress_vector
 import numpy as np
 import secrets
 
-d_t = 2
-q = 3329
-eta = 2
-
-def poly_mul(a, b):
+def poly_mul(a, b, q):
     res = np.convolve(a, b) % q
     result = np.zeros(256, dtype=int)
 
@@ -20,28 +16,28 @@ def poly_mul(a, b):
     return result
 
 
-def multiply_matrix_vector(matrix, vector):
+def multiply_matrix_vector(matrix, vector, q):
     k = len(vector)
     result = []
     for i in range(k):
         acc = np.zeros(256, dtype=int)
         for j in range(k):
-            acc = (acc + poly_mul(matrix[i][j], vector[j])) % q
+            acc = (acc + poly_mul(matrix[i][j], vector[j], q)) % q
         result.append(acc)
     return np.array(result, dtype=object)
 
-def key_gen(k=3):
+def key_gen(k, eta, q, d_t):
     rho = secrets.token_bytes(32)  
-    A = gen_random_matrix(k, rho)
+    matrix = gen_random_matrix(k, rho, q)
 
     s = gen_noise(k, eta)
     e = gen_noise(k, eta)
 
-    t = multiply_matrix_vector(A, s)
+    t = multiply_matrix_vector(matrix, s, q)
     for i in range(k):
         t[i] = (t[i] + e[i]) % q
 
-    t_compressed = compress_vector(t, d_t)
+    t_compressed = compress_vector(t, d_t, q)
 
     public_key = (t_compressed, rho)
     secret_key = s
