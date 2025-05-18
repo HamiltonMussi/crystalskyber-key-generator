@@ -1,4 +1,4 @@
-import random
+import secrets
 import numpy as np
 
 def gen_noise(k, eta):
@@ -7,8 +7,8 @@ def gen_noise(k, eta):
         for j in range(256):
             noise = 0
             for _ in range(eta):
-                bit_a = random.getrandbits(1)
-                bit_b = random.getrandbits(1)
+                bit_a = secrets.randbelow(2)  
+                bit_b = secrets.randbelow(2)  
                 noise += (bit_a - bit_b)
             noise_vector[i][j] = noise
     return noise_vector
