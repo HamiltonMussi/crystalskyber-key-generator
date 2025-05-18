@@ -1,14 +1,15 @@
 import numpy as np
 
 def poly_mul(a, b, q):
-    res = np.convolve(a, b) % q
     result = np.zeros(256, dtype=int)
-
+    
     for i in range(256):
-        result[i] = res[i]
-    for i in range(256, len(res)):
-        result[i - 256] = (result[i - 256] - res[i]) % q
-
+        for j in range(256):
+            if i + j < 256:
+                result[(i + j) % 256] = (result[(i + j) % 256] + a[i] * b[j]) % q
+            else:
+                result[(i + j) % 256] = (result[(i + j) % 256] - a[i] * b[j]) % q
+                
     return result
 
 
