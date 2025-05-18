@@ -1,15 +1,10 @@
-from models.kyber import Kyber
+from models.kyber_versions import Kyber512, Kyber768, Kyber1024
 from time import time
 
 if __name__ == "__main__":
-    k = 2  
-    eta = 2
-    q = 3329
-    d_t = 11
-
     kyber_start_time = time()
 
-    kyber = Kyber(k, eta, q, d_t)
+    kyber = Kyber512()
     kyber.save_keys()
 
     kyber_end_time = time()
